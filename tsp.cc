@@ -5,5 +5,5 @@ using namespace std;
 
 int main()
 {
-  cout << cin;
+  cout << "foo\n";
 }
