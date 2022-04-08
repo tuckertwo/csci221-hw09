@@ -9,7 +9,6 @@ TEST_CASE("check_permutation")
   REQUIRE(check_permutation({0,1,2,3,4}));
   REQUIRE(check_permutation({}));
   REQUIRE(check_permutation({0}));
-  REQUIRE(!check_permutation({0}));
   REQUIRE(!check_permutation({0,1,1,2,3,4}));
   REQUIRE(!check_permutation({0,1,3,4}));
 }
