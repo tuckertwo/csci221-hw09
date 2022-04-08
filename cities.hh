@@ -33,3 +33,5 @@ class Cities
 };
 
 bool check_permutation(Cities::permutation_t perm);
+
+Cities::permutation_t random_permutation(unsigned int len);
