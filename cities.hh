@@ -8,7 +8,8 @@
 
 
 // Representation of an ordering of cities
-class Cities {
+class Cities
+{
  public:
   // A pair of integral coordinates for each city
   using coord_t = std::pair<int, int>;
@@ -30,3 +31,5 @@ class Cities {
   // distance on a plane between their coordinates.
   double total_path_distance(const permutation_t& ordering) const;
 };
+
+bool check_permutation(Cities::permutation_t perm);
