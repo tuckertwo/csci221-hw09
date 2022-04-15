@@ -30,6 +30,8 @@ class Cities
   // The distance between any two cities is computed as the Euclidean 
   // distance on a plane between their coordinates.
   double total_path_distance(const permutation_t& ordering) const;
+ private:
+  std::vector<coord_t> points_;
 };
 
 bool check_permutation(Cities::permutation_t perm);

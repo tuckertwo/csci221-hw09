@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <random>
+#include <cmath>
 
 using namespace std;
 
@@ -35,4 +36,22 @@ Cities::permutation_t random_permutation(unsigned int len)
   mt19937 rand_gen(rand_dev());
   shuffle(perm.begin(), perm.end(), rand_gen);
   return perm;
+}
+
+double Cities::total_path_distance(const Cities::permutation_t& ordering) const
+{
+  double accum = 0;
+  for(unsigned i=0; i<points_.size(); i++)
+  {
+    // Our first point is at index i.
+    Cities::coord_t c0 = points_.at(ordering.at(i));
+
+    // Our second point is after index i, wrapping around (using modulo) if i is
+    // the last element.
+    Cities::coord_t c1 = points_.at(ordering.at((i+1)%points_.size()));
+
+    accum += sqrt(pow(get<0>(c0)-get<0>(c1), 2)
+        + pow(get<1>(c0)-get<1>(c1), 2));
+  }
+  return accum;
 }
