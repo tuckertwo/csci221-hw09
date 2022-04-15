@@ -12,7 +12,7 @@ class Cities
 {
  public:
   // A pair of integral coordinates for each city
-  using coord_t = std::pair<int, int>;
+  using coord_t = std::pair<int, int>; // int x, int y
 
   // An ordering of cities. Each value represents a unique index
   // into the current city ordering in some container.
