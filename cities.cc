@@ -3,8 +3,22 @@
 #include <vector>
 #include <random>
 #include <cmath>
+#include <cassert>
 
 using namespace std;
+
+Cities Cities::reorder(const permutation_t& ordering) const
+{
+  assert(check_permutation(ordering));
+  Cities::atlas_t new_atlas(ordering.size()); // Make a new atlas
+  for(unsigned i=0; i<ordering.size(); i++) // Fill it
+  {
+    new_atlas.at(ordering.at(i)) = points_.at(i);
+  }
+  Cities new_cities(new_atlas);
+  return new_cities;
+
+}
 
 double Cities::total_path_distance(const Cities::permutation_t& ordering) const
 {
@@ -23,6 +37,32 @@ double Cities::total_path_distance(const Cities::permutation_t& ordering) const
   }
   return accum;
 }
+
+Cities::operator<<(ostream& out) const
+{
+  for(pair<int> coord : points_)
+  {
+    // x y\n
+    out << get<0>(coord) << "\t" << get<1>(coord) << endl;
+  }
+}
+
+Cities::operator>>(istream& in)
+{
+  while(!in.eof())
+  {
+    // C++'s << operator actually makes this remarkably easy.
+    // It skips over whitespace (spaces, tabs, and newlines alike), then grabs
+    // and parses the next cluster of integers.
+    // It throws an exception if it receives unexpected input.
+    // Because of how this program is set up, coordinates and pairs of points
+    // need only be separated by spaces, which could cause unexpected results
+    // with pathologically malformed files.
+    int x, y;
+    in>>x;
+    in>>y;
+    points_.push_back(make_pair<Cities::coord_t>(x, y));
+  }
 
 bool check_permutation(Cities::permutation_t perm)
 {

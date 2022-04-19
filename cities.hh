@@ -5,12 +5,15 @@
 #pragma once
 
 #include <vector>
+#include <ostream>
+#include <istream>
 
 
 // Representation of an ordering of cities
 class Cities
 {
  public:
+
   // A pair of integral coordinates for each city
   using coord_t = std::pair<int, int>; // int x, int y
 
@@ -35,6 +38,13 @@ class Cities
   // The distance between any two cities is computed as the Euclidean 
   // distance on a plane between their coordinates.
   double total_path_distance(const permutation_t& ordering) const;
+
+  // Reads out the list of cities into an output stream.
+  // >> and << should roughly be their own inverses.
+  operator<<(std::ostream& out) const;
+
+  // Reads  in an  input stream into the list of cities.
+  operator>>(std::istream& out);
  private:
   atlas_t points_;
 };
