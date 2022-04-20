@@ -47,5 +47,8 @@ TEST_CASE("Cities and other methods")
         2,1,0}) != 122);
 
   double tpd_ir = cities2.total_path_distance({0,1,2,3});
-  REQUIRE(tpd_ir>16 && tpd_ir<17);
+  // Crude attempt at ensuring that an irrational number is equal to the /right/
+  // irrational number.
+  REQUIRE(tpd_ir>16);
+  REQUIRE(tpd_ir<17);
 }
