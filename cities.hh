@@ -41,10 +41,10 @@ class Cities
 
   // Reads out the list of cities into an output stream.
   // >> and << should roughly be their own inverses.
-  operator<<(std::ostream& out) const;
+  friend std::ostream& operator<<(std::ostream& out, const Cities& cities);
 
   // Reads  in an  input stream into the list of cities.
-  operator>>(std::istream& out);
+  friend std::istream& operator>>(std::istream& in,  Cities& cities);
  private:
   atlas_t points_;
 };

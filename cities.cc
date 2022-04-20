@@ -38,16 +38,17 @@ double Cities::total_path_distance(const Cities::permutation_t& ordering) const
   return accum;
 }
 
-Cities::operator<<(ostream& out) const
+ostream& operator<<(ostream& out, const Cities& cities_obj)
 {
-  for(pair<int> coord : points_)
+  for(Cities::coord_t coord : cities_obj.points_)
   {
     // x y\n
     out << get<0>(coord) << "\t" << get<1>(coord) << endl;
   }
+  return out;
 }
 
-Cities::operator>>(istream& in)
+istream& operator>>(istream& in,  Cities& cities_obj)
 {
   while(!in.eof())
   {
@@ -61,8 +62,10 @@ Cities::operator>>(istream& in)
     int x, y;
     in>>x;
     in>>y;
-    points_.push_back(make_pair<Cities::coord_t>(x, y));
+    cities_obj.points_.push_back(make_pair(x, y));
   }
+  return in;
+}
 
 bool check_permutation(Cities::permutation_t perm)
 {
