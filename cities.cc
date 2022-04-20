@@ -50,7 +50,7 @@ ostream& operator<<(ostream& out, const Cities& cities_obj)
 
 istream& operator>>(istream& in,  Cities& cities_obj)
 {
-  while(!in.eof())
+  while(!in.fail()) // in.fail() also covers cases where in has reached EOF.
   {
     // C++'s << operator actually makes this remarkably easy.
     // It skips over whitespace (spaces, tabs, and newlines alike), then grabs
@@ -60,9 +60,18 @@ istream& operator>>(istream& in,  Cities& cities_obj)
     // need only be separated by spaces, which could cause unexpected results
     // with pathologically malformed files.
     int x, y;
-    in>>x;
-    in>>y;
-    cities_obj.points_.push_back(make_pair(x, y));
+    in>>x; // Read x coord
+    in>>y; // Read y coord
+
+    // This may seem unnecessary, but istreams won't output EOF until
+    // a read is attempted past the end of file.
+    // If such a read is attempted, the variable being read to is not modified.
+    // Thus, without the below line, this loop will push the previous contents
+    // of x and y to the points_ vector, causing a bug.
+    if(!in.fail())
+    {
+      cities_obj.points_.push_back(make_pair(x, y));
+    }
   }
   return in;
 }
