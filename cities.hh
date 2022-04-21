@@ -45,6 +45,9 @@ class Cities
 
   // Reads  in an  input stream into the list of cities.
   friend std::istream& operator>>(std::istream& in,  Cities& cities);
+
+  // Gives the number of cities contained within the Cities object.
+  unsigned size() const;
  private:
   atlas_t points_;
 };

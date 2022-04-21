@@ -76,6 +76,11 @@ istream& operator>>(istream& in,  Cities& cities_obj)
   return in;
 }
 
+unsigned Cities::size() const
+{
+  return points_.size();
+}
+
 bool check_permutation(Cities::permutation_t perm)
 {
   vector<bool> elements(perm.size(), false);

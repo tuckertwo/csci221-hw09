@@ -38,6 +38,11 @@ TEST_CASE("Cities and other methods")
   Cities cities2({std::make_pair(1,2),  std::make_pair(3,4),
       std::make_pair(5,6), std::make_pair(7,8)});
 
+  // Test size
+  REQUIRE(cities0.size() == 0);
+  REQUIRE(cities1.size() == 9);
+  REQUIRE(cities2.size() == 4);
+
   // Test TPD
   REQUIRE(cities1.total_path_distance({0,1,2,3,4,5,6,7,8}) == 122);
   // Make sure reordering and inversion works as expected
