@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   Cities cities_obj;
-  if(argc>=2)
+  if(argc>2)
   {
     cerr<<"Incorrect number of arguments"<<endl;
     return 1;
