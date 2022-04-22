@@ -26,12 +26,13 @@ int main(int argc, char *argv[])
     cin>>cities_obj;
   }
 
+  // Cleanly initialize variables to start.
   Cities::permutation_t perm = random_permutation(cities_obj.size());
-  unsigned target            = cities_obj.total_path_distance(perm);
+  double target              = cities_obj.total_path_distance(perm);
   for(unsigned i_=1; i_<1048576; i_++)
   {
     Cities::permutation_t attempt = random_permutation(cities_obj.size());
-    unsigned attempt_size         = cities_obj.total_path_distance(attempt);
+    double attempt_size           = cities_obj.total_path_distance(attempt);
     if(attempt_size>target)
     {
       perm   = attempt;
