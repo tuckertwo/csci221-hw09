@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     {
       perm   = attempt;
       target = attempt_size;
+      cout<<i<<"\t"<<target<<endl;
     }
   }
 
@@ -52,10 +53,10 @@ int main(int argc, char *argv[])
     }
     outfile<<cities_obj;
   }
-  else
+  /*else
   {
     cout<<cities_obj.reorder(perm);
-  }
+  }*/
   cerr<<"Done. Minimum distance: "<<target<<endl;
   return 0;
 }
