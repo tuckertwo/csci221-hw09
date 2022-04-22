@@ -27,13 +27,15 @@ int main(int argc, char *argv[])
   }
 
   // Cleanly initialize variables to start.
-  Cities::permutation_t perm = random_permutation(cities_obj.size());
-  double target              = cities_obj.total_path_distance(perm);
-  for(unsigned i_=1; i_<1048576; i_++)
+  Cities::permutation_t perm;
+  double target = INFINITY; // Largest possible value; nothing compares higher
+                            // Ensures that perm and target will be replaced
+                            // ASAP in the loop below.
+  for(unsigned i=1; i_<1048576; i++)
   {
     Cities::permutation_t attempt = random_permutation(cities_obj.size());
     double attempt_size           = cities_obj.total_path_distance(attempt);
-    if(attempt_size>target)
+    if(attempt_size>target) // then we've found a more optimal solution.
     {
       perm   = attempt;
       target = attempt_size;
