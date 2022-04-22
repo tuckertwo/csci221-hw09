@@ -13,7 +13,13 @@ int main(int argc, char *argv[])
   }
   else if(argc==2)
   {
-    //
+    basic_ifstream infile(argv[1]);
+    if(infile.fail() || infile.bad())
+    {
+      cerr<<"Cannot open "<<argv[1]<<endl;
+      return 2;
+    }
+    infile>>cities_obj;
   }
   else
   {
@@ -21,8 +27,8 @@ int main(int argc, char *argv[])
   }
 
   Cities::permutation_t perm = random_permutation(cities_obj.size());
-  unsigned target = cities_obj.total_path_distance(perm);
-  for(unsigned i_; i_<(2^cities_obj.size()); i_++) // Change me.
+  unsigned target            = cities_obj.total_path_distance(perm);
+  for(unsigned i_=1; i_<1048576; i_++)
   {
     Cities::permutation_t attempt = random_permutation(cities_obj.size());
     unsigned attempt_size         = cities_obj.total_path_distance(attempt);
@@ -35,7 +41,13 @@ int main(int argc, char *argv[])
 
   if(argc==2)
   {
-    //
+    basic_ofstream outfile("shortest.tsv");
+    if(outfile.fail() || outfile.bad())
+    {
+      cerr<<"Cannot open shortest.tsv"<<endl;
+      return 2;
+    }
+    outfile<<cities_obj;
   }
   else
   {
