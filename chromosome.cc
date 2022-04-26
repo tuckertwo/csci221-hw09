@@ -30,8 +30,19 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
-  // Add your implementation here
+  assert(order_.size()>0); // Prevents UB in uniform_int_distribution
 
+  // Allows us to generate unbiased random numbers in a particular
+  std::uniform_int_distribution<unsigned> dist(0, order_.size()-1);
+
+  // Generates our indices.
+  unsigned idx0   = dist(generator_);
+  unsigned idx1   = dist(generator_);
+
+  // Performs the swap.
+  unsigned temp   = order_.at(idx0);
+  order_.at(idx0) = order_.at(idx1);
+  order_.at(idx1) = temp;
   assert(is_valid());
 }
 
