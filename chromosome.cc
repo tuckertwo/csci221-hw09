@@ -95,7 +95,11 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
-  // Add your implementation here
+  double dist = cities_ptr_->total_path_distance(order_);
+  // For any x>1, 1/x<x. Thus, we can make our fitness the reciprocal of the
+  // total path distance to convert from a lower-is-better measurement to a
+  // higher-is-better measurement.
+  return 1/(dist+1);
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
