@@ -116,5 +116,12 @@ Chromosome::is_valid() const
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  // Add your implementation here
+  for(i = begin; i != end; i++)
+  {
+    if(*i == value)
+    {
+      return true;
+    }
+  }
+  return false;
 }
