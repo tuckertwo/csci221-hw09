@@ -40,7 +40,26 @@ void Deme::compute_next_generation()
 // Return a copy of the chromosome with the highest fitness.
 const Chromosome* Deme::get_best() const
 {
-  // Add your implementation here
+  // Handle a population of zero properly
+  if(pop_.size() == 0)
+  {
+    return nullptr;
+  }
+  else
+  {
+    Chromosome* best = nullptr;
+    for(Chromosome* cand : pop_)
+    {
+      // First clause handles nullptrs properly.
+      // Efficiency can probably be improved by not computing fitness twice for
+      // every loop iteration.
+      if(!best || cand->get_fitness()>best->get_fitness())
+      {
+        best = cand;
+      }
+    }
+    return best;
+  }
 }
 
 // Randomly select a chromosome in the population based on fitness and
