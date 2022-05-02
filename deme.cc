@@ -55,11 +55,13 @@ const Chromosome* Deme::get_best() const
     // Use the lovely STL to get us the element with the highest fitness, using
     // a special ad-hoc comparison function to handle nullptrs and calling the
     // get_fitness method.
-    return std::max_element(pop_.cbegin(), pop_.cend(),
+    // Note that max_element returns an iterator, not an element.
+    auto max_el_iter = std::max_element(pop_.cbegin(), pop_.cend(),
         [](Chromosome* a, Chromosome* b)
           {return (a&&b)&&(a->get_fitness() < b->get_fitness());});
           // (a&&b)&&x ensures that a and b are not nullptrs before evaluating
           // x, which relies on a and b actually pointing to something.
+    return *max_el_iter;
   }
 }
 
