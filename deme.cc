@@ -47,18 +47,14 @@ const Chromosome* Deme::get_best() const
   }
   else
   {
-    Chromosome* best = nullptr;
-    for(Chromosome* cand : pop_)
-    {
-      // First clause handles nullptrs properly.
-      // Efficiency can probably be improved by not computing fitness twice for
-      // every loop iteration.
-      if(!best || cand->get_fitness()>best->get_fitness())
-      {
-        best = cand;
-      }
-    }
-    return best;
+    // Use the lovely STL to get us the element with the highest fitness, using
+    // a special ad-hoc comparison function to handle nullptrs and calling the
+    // get_fitness method.
+    return std::max_element(pop_.cbegin(), pop_.cend(),
+        [](Chromosome* a, Chromosome* b)
+          {return (a&&b)&&(a->get_fitness() < b->get_fitness());});
+          // (a&&b)&&x ensures that a and b are not nullptrs before evaluating
+          // x, which relies on a and b not being null.
   }
 }
 
