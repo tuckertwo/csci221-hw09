@@ -120,6 +120,7 @@ Chromosome::get_fitness() const
 bool
 Chromosome::is_valid() const
 {
+  // Already wrote this function for HW09.
   return check_permutation(order_);
 }
 
