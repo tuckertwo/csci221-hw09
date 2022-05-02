@@ -5,6 +5,8 @@
 
 #include "chromosome.hh"
 #include "deme.hh"
+#include <algorithm>
+#include <cassert>
 
 // Generate a Deme of the specified size with all-random chromosomes.
 // Also receives a mutation rate in the range [0-1].
