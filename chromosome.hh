@@ -84,5 +84,6 @@ class Chromosome {
   const Cities* cities_ptr_; // Keep ptr to cities, no need for full copy
   Cities::permutation_t order_;  // The actual permutation of this chromosome
 
-  std::default_random_engine generator_; // A random number generator for the various methods
+  // A random number generator for the various methods
+  std::default_random_engine generator_;
 };
