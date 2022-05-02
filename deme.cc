@@ -18,7 +18,7 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
     mut_rate_(mut_rate),
     generator_(rand())
 {
-  for(unsigned i_ = 0; i_<pop_size; i++)
+  for(unsigned i = 0; i<pop_size; i++)
   {
     pop_.push_back(new Chromosome(cities_ptr));
   }
