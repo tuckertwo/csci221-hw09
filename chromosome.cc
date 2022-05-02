@@ -32,7 +32,7 @@ Chromosome::mutate()
 {
   assert(order_.size()>0); // Prevents UB in uniform_int_distribution
 
-  // Allows us to generate unbiased random numbers in a particular
+  // Allows us to generate unbiased random numbers in a particular range
   std::uniform_int_distribution<unsigned> dist(0, order_.size()-1);
 
   // Generates our indices.
