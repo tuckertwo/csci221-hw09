@@ -129,5 +129,13 @@ Chromosome::is_valid() const
 // [begin, end) and false otherwise.
 bool Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  return std::any_of(begin, end, [value](unsigned el) {return el==value});
+  for(unsigned i = begin; i != end; i++)
+  {
+    // Doesn't bounds-check i because .at() does that for us.
+    if(order_.at(i) == value)
+    {
+      return true;
+    }
+  }
+  return false;
 }
