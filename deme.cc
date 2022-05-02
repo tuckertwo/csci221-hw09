@@ -9,8 +9,14 @@
 // Generate a Deme of the specified size with all-random chromosomes.
 // Also receives a mutation rate in the range [0-1].
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
+  : pop_(nullptr, pop_size),
+    mut_rate_(mut_rate),
+    generator_(rand())
 {
-  // Add your implementation here
+  for(unsigned i_ = 0; i_<pop_size; i++)
+  {
+    pop_.push_back(new Chromosome(cities_ptr));
+  }
 }
 
 // Clean up as necessary
