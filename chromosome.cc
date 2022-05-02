@@ -106,9 +106,12 @@ double
 Chromosome::get_fitness() const
 {
   double dist = cities_ptr_->total_path_distance(order_);
+
   // For any x>1, 1/x<x. Thus, we can make our fitness the reciprocal of the
   // total path distance to convert from a lower-is-better measurement to a
   // higher-is-better measurement.
+  // First, though, we've got to make sure our constraint holds.
+  assert(dist>0); // Our constraint is x>0 because we use x+1 later.
   return 1/(dist+1);
 }
 
