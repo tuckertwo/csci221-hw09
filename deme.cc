@@ -69,5 +69,19 @@ const Chromosome* Deme::get_best() const
 // return a pointer to that chromosome.
 Chromosome* Deme::select_parent()
 {
-  // Add your implementation here
+  // Calculate fitnesses using my beloved map()-like function.
+  // This makes the function run in O(n) time, and is probably the most
+  // computationally expensive part of it for large values of n.
+  // It would thus make sense to replace repeated calls to select_parent() with
+  // a mechanism that would generate the fitness list once and repeatedly select
+  // unique chromosomes using it.
+  std::vector<double> fitnesses;
+  std::transform(pop_.cbegin(), pop_.cend(), std::back_inserter(fitnesses),
+      [](Chromosome* x) {return x->get_fitness();});
+  assert(fitnesses.size() == pop_.size());
+
+  // Select the index of a random chromosome using discrete_distribution and the
+  // weights calculated previously, then return the chromosome with that index.
+  std::discrete_distribution distr(fitnesses.cbegin(), fitnesses.cend());
+  return pop_.at(distr(generator_));
 }
