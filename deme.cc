@@ -54,7 +54,7 @@ const Chromosome* Deme::get_best() const
         [](Chromosome* a, Chromosome* b)
           {return (a&&b)&&(a->get_fitness() < b->get_fitness());});
           // (a&&b)&&x ensures that a and b are not nullptrs before evaluating
-          // x, which relies on a and b not being null.
+          // x, which relies on a and b actually pointing to something.
   }
 }
 
