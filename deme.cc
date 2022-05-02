@@ -11,7 +11,10 @@
 // Generate a Deme of the specified size with all-random chromosomes.
 // Also receives a mutation rate in the range [0-1].
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
-  : pop_(nullptr, pop_size),
+    // It is my impression that initializing a vector with placeholders and then
+    // overwriting those placeholders is more efficient than growing the vector
+    // for each new element.
+  : pop_(pop_size, nullptr),
     mut_rate_(mut_rate),
     generator_(rand())
 {
