@@ -55,7 +55,17 @@ Chromosome::recombine(const Chromosome* other)
   assert(is_valid());
   assert(other->is_valid());
 
-  // Add your implementation here
+  // Generate our initial index into the array.
+  std::uniform_int_distribution<unsigned> dist0(0, order_.size()-2);
+  unsigned idx0 = dist0(generator_);
+  // Generate our second index by picking a number after the first index
+  std::uniform_int_distribution<unsigned> dist1(idx0, order_.size()-1);
+  unsigned idx1 = dist0(generator_);
+  // Crossover
+  Chromosome* child0 = create_crossover_child(this, other, idx0, idx1);
+  Chromosome* child1 = create_crossover_child(other, this, idx1, idx0);
+  return std::make_pair(child0, child1);
+  // You just lost The Game.
 }
 
 //////////////////////////////////////////////////////////////////////////////
