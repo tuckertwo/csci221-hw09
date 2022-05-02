@@ -127,12 +127,12 @@ Chromosome::is_valid() const
 // Find whether a certain value appears in a given range of the chromosome.
 // Returns true if value is within the specified the range specified
 // [begin, end) and false otherwise.
-bool
-Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
+bool Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  for(i = begin; i != end; i++)
+  for(unsigned i = begin; i != end; i++)
   {
-    if(*i == value)
+    // Doesn't bounds-check i because .at() does that for us.
+    if(order_.at(i) == value)
     {
       return true;
     }
