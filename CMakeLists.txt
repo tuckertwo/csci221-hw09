@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_compile_options(-Wall -Wextra -pedantic)
 add_library(Cities     cities.cc)
 add_library(Chromosome chromosome.cc)
-add_library(Deme       chromosome.cc)
+add_library(Deme       deme.cc)
 
 add_executable(tsp tsp.cc)
 
