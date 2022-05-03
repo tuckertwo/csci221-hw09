@@ -39,7 +39,28 @@ Deme::~Deme()
 // After we've generated pop_size new chromosomes, we delete all the old ones.
 void Deme::compute_next_generation()
 {
-  // Add your implementation here
+  std::vector<Chromosome*> newpop;
+  for(unsigned i=0; i<pop_.size()/2; i++)
+  {
+    // This does not provide special handling for the case where both parents
+    // are the same.
+    Chromosome* parent0 = select_parent();
+    Chromosome* parent1 = select_parent();
+    // Decimal points are necessary to make the constructor use float types.
+    std::uniform_real_distribution randdist(0.0, 1.0);
+    for(Chromosome* parent : {parent0, parent1})
+    {
+      if(randdist(generator_) < mut_rate_)
+      {
+        parent->mutate();
+      }
+    }
+    std::pair<Chromosome*, Chromosome*> children = parent0->recombine(parent1);
+    newpop.push_back(std::get<0>(children));
+    newpop.push_back(std::get<1>(children));
+  }
+  assert(pop_.size() == newpop.size());
+  pop_ = newpop;
 }
 
 // Return a copy of the chromosome with the highest fitness.
@@ -77,7 +98,7 @@ Chromosome* Deme::select_parent()
   // unique chromosomes using it.
   std::vector<double> fitnesses;
   std::transform(pop_.cbegin(), pop_.cend(), std::back_inserter(fitnesses),
-      [](Chromosome* x) {return x->get_fitness();});
+      [](Chromosome* x) {return x ? x->get_fitness() : 0;});
   assert(fitnesses.size() == pop_.size());
 
   // Select the index of a random chromosome using discrete_distribution and the
