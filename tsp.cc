@@ -120,7 +120,9 @@ int main(int argc, char** argv)
     return -1;
   }
 
-  const auto cities = Cities(argv[1]);
+  auto cities = Cities();
+  std::ifstream infile(argv[1]);
+  infile>>cities;
   const auto pop_size = atoi(argv[2]);
   const auto mut_rate = atof(argv[3]);
   constexpr unsigned NUM_ITER = 100000;
