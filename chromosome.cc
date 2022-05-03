@@ -59,11 +59,12 @@ Chromosome::recombine(const Chromosome* other)
   std::uniform_int_distribution<unsigned> dist0(0, order_.size()-2);
   unsigned idx0 = dist0(generator_);
   // Generate our second index by picking a number after the first index
-  std::uniform_int_distribution<unsigned> dist1(idx0, order_.size()-1);
-  unsigned idx1 = dist0(generator_);
+  assert(idx0+1<=order_.size()-1);
+  std::uniform_int_distribution<unsigned> dist1(idx0+1, order_.size()-1);
+  unsigned idx1 = dist1(generator_);
   // Crossover
   Chromosome* child0 = create_crossover_child(this, other, idx0, idx1);
-  Chromosome* child1 = create_crossover_child(other, this, idx1, idx0);
+  Chromosome* child1 = create_crossover_child(other, this, idx0, idx1);
   return std::make_pair(child0, child1);
   // You just lost The Game.
 }
@@ -129,6 +130,7 @@ Chromosome::is_valid() const
 // [begin, end) and false otherwise.
 bool Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
+  assert(begin<=end);
   for(unsigned i = begin; i != end; i++)
   {
     // Doesn't bounds-check i because .at() does that for us.
