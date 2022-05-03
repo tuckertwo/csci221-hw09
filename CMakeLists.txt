@@ -6,6 +6,7 @@ add_compile_options(-Wall -Wextra -pedantic)
 add_library(Cities     cities.cc)
 add_library(Chromosome chromosome.cc)
 add_library(Deme       deme.cc)
+target_link_libraries(Deme        LINK_PUBLIC Chromosome)
 
 add_executable(tsp tsp.cc)
 
