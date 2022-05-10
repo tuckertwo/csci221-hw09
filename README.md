@@ -1,7 +1,6 @@
 # General Information
 This code was written by Julian Jacklin and Tucker R. Twomey.
-Documentation for the `tsp` program is below;
-documentation for the `Cities`, `Chromosome`, and `Deme` classes are contained
+Documentation for the `Cities`, `Chromosome`, and `Deme` classes are contained
 within their respective header files.
 Attempts have been made to use STL functions in preference to C-style constructs
 whenever possible.
