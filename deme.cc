@@ -100,7 +100,18 @@ Chromosome::chrom_ptr Deme::select_parent()
   // unique chromosomes using it.
   std::vector<double> fitnesses;
   std::transform(pop_.cbegin(), pop_.cend(), std::back_inserter(fitnesses),
-      [](Chromosome* x) {return x ? x->get_fitness() : 0;});
+      [](Chromosome::chrom_ptr x)
+      {
+        if(x)
+        {
+          double fitness = x->get_fitness();
+          return fitness;
+        }
+        else
+        {
+          return 0.0;
+        }
+      });
   assert(fitnesses.size() == pop_.size());
 
   // Select the index of a random chromosome using discrete_distribution and the
