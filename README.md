@@ -24,6 +24,8 @@ mutation rate (0-1) as the third argument.
 This will perform a genetic algorithm search,
 printing successively better solutions to STDOUT and writing the best solution
 to `shortest.tsv`.
+
+# Performance
 Experimentation has found that a high population size and mutation rate tends
 to converge quickly, while a lower population size and high mutation rate yields
 a better solution.
@@ -31,3 +33,6 @@ a better solution.
 The best solution found by the genetic algorithm, with a length of 17270.3,
 was found after 60720 iterations with a population size of 40, and a mutation
 rate of 0.9.
+
+![A graph comparing performance between genetic and random approaches to the
+travelling salesman problem.](comparison.gif)
