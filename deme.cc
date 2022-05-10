@@ -61,7 +61,7 @@ void Deme::compute_next_generation()
     newpop.push_back(std::get<0>(children));
     newpop.push_back(std::get<1>(children));
   }
-  assert(pop_.size() == newpop.size());
+  assert(abs(pop_.size() - newpop.size())<=1);
   pop_ = newpop;
 }
 
