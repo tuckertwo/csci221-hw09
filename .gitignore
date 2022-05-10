@@ -9,3 +9,5 @@ test_hforest
 test_cities
 tsp
 *.o
+*.pdf
+callgrind*
