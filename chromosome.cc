@@ -27,8 +27,7 @@ Chromosome::~Chromosome()
 
 //////////////////////////////////////////////////////////////////////////////
 // Perform a single mutation on this chromosome
-void
-Chromosome::mutate()
+void Chromosome::mutate()
 {
   assert(order_.size()>0); // Prevents UB in uniform_int_distribution
 
@@ -49,8 +48,8 @@ Chromosome::mutate()
 //////////////////////////////////////////////////////////////////////////////
 // Return a pair of offsprings by recombining with another chromosome
 // Note: this method allocates memory for the new offsprings
-std::pair<Chromosome*, Chromosome*>
-Chromosome::recombine(const Chromosome* other)
+std::pair<Chromosome::chrom_ptr, Chromosome::chrom_ptr>
+Chromosome::recombine(const Chromosome::chrom_ptr other)
 {
   assert(is_valid());
   assert(other->is_valid());
@@ -63,8 +62,9 @@ Chromosome::recombine(const Chromosome* other)
   std::uniform_int_distribution<unsigned> dist1(idx0+1, order_.size()-1);
   unsigned idx1 = dist1(generator_);
   // Crossover
-  Chromosome* child0 = create_crossover_child(this, other, idx0, idx1);
-  Chromosome* child1 = create_crossover_child(other, this, idx0, idx1);
+  Chromosome::chrom_ptr me = clone();
+  Chromosome::chrom_ptr child0 = create_crossover_child(me, other, idx0, idx1);
+  Chromosome::chrom_ptr child1 = create_crossover_child(other, me, idx0, idx1);
   return std::make_pair(child0, child1);
   // You just lost The Game.
 }
@@ -73,11 +73,12 @@ Chromosome::recombine(const Chromosome* other)
 // For an ordered set of parents, return a child using the ordered crossover.
 // The child will have the same values as p1 in the range [b,e),
 // and all the other values in the same order as in p2.
-Chromosome*
-Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
+Chromosome::chrom_ptr
+Chromosome::create_crossover_child(const Chromosome::chrom_ptr p1,
+                                   const Chromosome::chrom_ptr p2,
                                    unsigned b, unsigned e) const
 {
-  Chromosome* child = p1->clone();
+  Chromosome::chrom_ptr child = p1->clone();
 
   // We iterate over both parents separately, copying from parent1 if the
   // value is within [b,e) and from parent2 otherwise
@@ -85,14 +86,14 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 
   for ( ; i < p1->order_.size() && j < p2->order_.size(); ++i) {
     if (i >= b and i < e) {
-      child->order_[i] = p1->order_[i];
+      child->order_.at(i) = p1->order_.at(i);
     }
     else { // Increment j as long as its value is in the [b,e) range of p1
       while (p1->is_in_range(p2->order_[j], b, e)) {
         ++j;
         assert(j < p2->order_.size());
       }
-      child->order_[i] = p2->order_[j];
+      child->order_.at(i) = p2->order_.at(j);
       j++;
     }
   }
@@ -106,6 +107,7 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
+  assert(is_valid());
   double dist = cities_ptr_->total_path_distance(order_);
 
   // For any x>1, 1/x<x. Thus, we can make our fitness the reciprocal of the

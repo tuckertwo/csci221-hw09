@@ -12,6 +12,7 @@
 
 #include "cities.hh"
 #include <random>
+#include <memory>
 
 class Chromosome {
  protected:
@@ -22,6 +23,11 @@ class Chromosome {
   Chromosome& operator=(Chromosome&&) = default;
 
  public:
+  // This code has been converted from C-style pointers to shared_ptrs, because
+  // there's not really a good reason to use the former when the latter provide
+  // much more airtight guarantees of safety and the like with little overhead.
+  using chrom_ptr = std::shared_ptr<Chromosome>;
+
   // Creation method for new Chromsomoe. Saves a copy of the cities and
   // generates a completely random permutation from a list of cities.
   Chromosome(const Cities*);
@@ -29,9 +35,10 @@ class Chromosome {
   // Polymorphic creation method from an existing Chromosome.
   // This method allocates memory for the newly created chromosome.
   // It is the caller's responsibility to free this memory.
-  virtual Chromosome* clone() const
+  virtual chrom_ptr clone() const
   {
-    return new Chromosome(*this);
+    chrom_ptr chrom(new Chromosome(*this));
+    return chrom;
   }
 
   // Clean up as necessary
@@ -43,8 +50,7 @@ class Chromosome {
   // Return a pair of offsprings by recombining with another chromosome
   // Note: this method allocates memory for the new offsprings
   // It is the caller's responsibility to free this memory.
-  virtual std::pair<Chromosome*, Chromosome*>
-  recombine(const Chromosome* other);
+  virtual std::pair<chrom_ptr, chrom_ptr> recombine(const chrom_ptr other);
 
   // Compute total distance to traverse cities in ordering:
   double calculate_total_distance() const
@@ -66,11 +72,10 @@ class Chromosome {
   // For an ordered set of parents, return a child using the ordered crossover.
   // The child will have the same values as p1 in the range [begin,end),
   // and all the other values in the same order as in p2.
-  virtual Chromosome*
-  create_crossover_child(const Chromosome* parent1,
-                         const Chromosome* parent2,
-                         unsigned begin,
-                         unsigned end) const;
+  virtual chrom_ptr create_crossover_child(const chrom_ptr parent1,
+                                           const chrom_ptr parent2,
+                                           unsigned begin,
+                                           unsigned end) const;
 
   // A chromsome is valid if it has no repeated values in its permutation,
   // as well as no indices above the range (length) of the chromosome.
