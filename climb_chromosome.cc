@@ -1,6 +1,8 @@
 #include "climb_chromosome.hh"
 #include <cassert>
 
+ClimbChromosome::~ClimbChromosome() {}
+
 void ClimbChromosome::mutate()
 {
   assert(order_.size()>0); // Prevents UB in uniform_int_distribution
