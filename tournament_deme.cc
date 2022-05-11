@@ -19,7 +19,7 @@ Chromosome::chrom_ptr TournamentDeme::select_parent()
   std::vector<ClimbChromosome::chrom_ptr> bracket;
   for(unsigned i=0; i<init_size; i++)
   {
-    bracket.at(i) = pop_.at(perm.at(i));
+    bracket.push_back(pop_.at(perm.at(i)));
   }
 
   while(bracket.size()>1)
