@@ -3,6 +3,19 @@
 #include <algorithm>
 #include <cassert>
 
+// Generate a TournamentDeme of the specified size with all-random chromosomes.
+// Also receives a mutation rate in the range [0-1].
+TournamentDeme::TournamentDeme(const Cities* cities_ptr, unsigned pop_size,
+    double mut_rate)
+  : Deme(cities_ptr, pop_size, mut_rate)
+{
+  for(unsigned i = 0; i<pop_size; i++)
+  {
+    ClimbChromosome::chrom_ptr member(new ClimbChromosome(cities_ptr));
+    pop_.at(i) = member;
+  }
+}
+
 TournamentDeme::~TournamentDeme() {}
 
 // Randomly select a chromosome in the population using tournament selection and
