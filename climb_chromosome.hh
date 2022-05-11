@@ -1,4 +1,5 @@
 #include "chromosome.hh"
+#pragma once
 
 class ClimbChromosome : public Chromosome
 {
