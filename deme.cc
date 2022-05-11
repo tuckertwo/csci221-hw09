@@ -20,7 +20,7 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
   for(unsigned i = 0; i<pop_size; i++)
   {
-    Chromosome::chrom_ptr member(new Chromosome(cities_ptr));
+    Chromosome::chrom_ptr member(new ClimbChromosome(cities_ptr));
     pop_.at(i) = member;
   }
 }

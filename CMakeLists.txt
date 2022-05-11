@@ -9,6 +9,7 @@ add_library(Deme       deme.cc)
 add_library(ClimbChromosome climb_chromosome.cc)
 add_library(TournamentDeme  tournament_deme.cc)
 target_link_libraries(Deme        LINK_PUBLIC Chromosome)
+target_link_libraries(Deme        LINK_PUBLIC ClimbChromosome)
 target_link_libraries(TournamentDeme LINK_PUBLIC Chromosome)
 target_link_libraries(TournamentDeme LINK_PUBLIC ClimbChromosome)
 
