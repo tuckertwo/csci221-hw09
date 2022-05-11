@@ -104,11 +104,16 @@ Chromosome::create_crossover_child(const Chromosome::chrom_ptr p1,
 
 // Return a positive fitness value, with higher numbers representing
 // fitter solutions (shorter total-city traversal path).
-double
-Chromosome::get_fitness() const
+double Chromosome::get_fitness() const
 {
-  assert(is_valid());
-  double dist = cities_ptr_->total_path_distance(order_);
+  return get_fitness_perm(order_);
+}
+
+// Gets the fitness of a particular ordering.
+double Chromosome::get_fitness_perm(Cities::permutation_t order) const
+{
+  assert(check_permutation(order));
+  double dist = cities_ptr_->total_path_distance(order);
 
   // For any x>1, 1/x<x. Thus, we can make our fitness the reciprocal of the
   // total path distance to convert from a lower-is-better measurement to a

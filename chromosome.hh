@@ -86,6 +86,9 @@ class Chromosome {
   // [begin, end) and false otherwise.
   bool is_in_range(unsigned value, unsigned begin, unsigned end) const;
 
+  // Evaluates the fitness of a specific ordering.
+  double get_fitness_perm(Cities::permutation_t order) const;
+
   const Cities* cities_ptr_; // Keep ptr to cities, no need for full copy
   Cities::permutation_t order_;  // The actual permutation of this chromosome
 
