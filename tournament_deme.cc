@@ -3,9 +3,11 @@
 #include <algorithm>
 #include <cassert>
 
-// Randomly select a chromosome in the population based on fitness and
+TournamentDeme::~TournamentDeme() {}
+
+// Randomly select a chromosome in the population using tournament selection and
 // return a pointer to that chromosome.
-Chromosome::chrom_ptr Deme::select_parent()
+Chromosome::chrom_ptr TournamentDeme::select_parent()
 {
   unsigned init_size = pow(2, floor(log2(pop_.size())-1));
   assert(init_size>1);
